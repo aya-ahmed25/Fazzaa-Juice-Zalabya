@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>إدارة الطلبات | فزاع</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="order-admin.css">
+</head>
+
+<body>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a href="Fazzaa-menu.html" class="admin-brand">فزاع <span>إدارة الطلبات</span></a>
+      <a href="Fazzaa-menu.html" class="back-link">العودة للمنيو</a>
+    </header>
+
+    <section id="login-panel" class="panel login-panel">
+      <h1>دخول المحل</h1>
+      <p>سجّلي الدخول بحساب الإدارة المعتمد.</p>
+      <form id="login-form" method="post">
+        <label>البريد الإلكتروني
+          <input name="email" type="email" autocomplete="username" required disabled>
+        </label>
+        <label>كلمة المرور
+          <input name="password" type="password" autocomplete="current-password" required disabled>
+        </label>
+        <button class="primary-button" type="submit" disabled>تسجيل الدخول</button>
+      </form>
+      <p id="login-message" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="admin-panel" hidden>
+      <div class="admin-title-row">
+        <div>
+          <h1>طلبات العملاء</h1>
+          <p>تنبيه فوري عند وصول طلب جديد، مع تحديث تلقائي مستمر.</p>
+        </div>
+        <div class="admin-actions">
+          <button id="enable-notifications" class="primary-button" type="button">تفعيل تنبيهات الطلبات</button>
+          <button id="refresh-orders" class="secondary-button" type="button">تحديث الطلبات</button>
+          <button id="sign-out" class="secondary-button" type="button">تسجيل الخروج</button>
+        </div>
+      </div>
+      <p id="notification-status" class="notification-status" role="status" aria-live="polite">
+        فعّلي التنبيهات واسمحي بها من المتصفح لسماع صوت ووصول إشعار عند الطلب الجديد.
+      </p>
+      <div id="order-alert" class="order-alert" role="alert" aria-live="assertive" hidden>
+        <div>
+          <strong id="order-alert-title">طلب جديد</strong>
+          <p id="order-alert-details"></p>
+        </div>
+        <button id="order-alert-view" class="secondary-button" type="button">عرض الطلب</button>
+        <button id="order-alert-close" class="order-alert-close" type="button" aria-label="إغلاق التنبيه">×</button>
+      </div>
+
+      <section class="orders-section" aria-labelledby="orders-heading">
+        <h2 id="orders-heading" class="section-heading">الطلبات الواردة</h2>
+        <p id="orders-message" class="message" role="status" aria-live="polite"></p>
+        <div id="orders-list" class="orders-list"></div>
+      </section>
+
+      <details class="panel settings-panel">
+        <summary>إعدادات التوصيل</summary>
+        <form id="delivery-settings-form">
+          <label>رسوم التوصيل الموحدة بالجنيه
+            <input name="delivery_fee" type="number" min="0" step="1" value="30">
+          </label>
+          <button class="primary-button" type="submit">حفظ الرسوم</button>
+        </form>
+        <p class="form-hint">التوصيل داخل محافظة دمياط فقط. الرسوم ثابتة حاليًا: 30 جنيهًا.</p>
+        <p id="settings-message" class="message" role="status" aria-live="polite"></p>
+      </details>
+
+      <section class="panel menu-management">
+        <div class="menu-heading">
+          <div>
+            <h2>إدارة المنيو</h2>
+            <p>أضيفي أصنافًا أو عدّلي الأسعار، وستظهر التغييرات للعملاء بعد تحديث المنيو.</p>
+          </div>
+          <button id="refresh-menu" class="secondary-button" type="button">تحديث المنيو</button>
+        </div>
+        <form id="add-menu-item-form" class="menu-item-form">
+          <label>اسم الصنف
+            <input name="name" required maxlength="80" placeholder="مثال: وافل فستق">
+          </label>
+          <label>القسم
+            <input name="category" required maxlength="40" list="menu-categories" placeholder="مثال: وافل">
+            <datalist id="menu-categories"></datalist>
+          </label>
+          <label class="price-input">الأسعار
+            <textarea name="prices" required rows="3" placeholder="عادي: 35&#10;كبير: 55"></textarea>
+          </label>
+          <p class="form-hint">اكتبي كل مقاس وسعر في سطر مثل «كبير: 55». للصنف بسعر واحد اكتبي «عادي: 35».</p>
+          <button id="add-menu-item" class="primary-button" type="submit">إضافة الصنف</button>
+        </form>
+        <p id="menu-message" class="message" role="status" aria-live="polite"></p>
+        <div id="menu-items-list" class="menu-items-list"></div>
+      </section>
+
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="order-config.js"></script>
+  <script src="order-admin.js"></script>
+</body>
+
+</html>
